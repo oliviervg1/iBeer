@@ -38,7 +38,6 @@ app.post('/search', function(req, res) {
         'rating': req.body.rating,
         'brewerydb_id': req.body.brewerydb_id || ''
     };
-    console.log(req.body.name);
     beerLogbook.put('/beer/' + req.body.name, options).then(
         function(data) {
             res.redirect('/search');
