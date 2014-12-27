@@ -1,0 +1,25 @@
+<script>
+//<![CDATA[
+jQuery(function() {
+    jQuery("#main-menu li").each(function() {
+        var item = jQuery(this).find("a");
+        if (item.attr("href") === window.location.pathname) {
+            item.addClass('active-menu');
+        }
+    });
+});
+//]]>
+</script>
+
+<nav class="navbar-default navbar-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="main-menu">
+            <li>
+                <a href="/search"><i class="fa fa-search fa-3x"></i> Search Catalogue</a>
+            </li>
+            <li>
+                <a href="/my-beers"><i class="fa fa-beer fa-3x"></i> My Beer Logbook</a>
+            </li>
+        </ul>
+    </div>
+</nav>

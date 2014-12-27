@@ -1,0 +1,135 @@
+<% include partials/head.ejs %>
+
+<div id="wrapper">
+    <% include partials/top-nav.ejs %>
+    <% include partials/side-nav.ejs %>
+
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Search</h2>
+                    <h5>Find your favourite beers here and add them to your logbook! Catalogue powered by <a href="http://www.brewerydb.com/">BreweryDB.</a></h5>
+                </div>
+            </div>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="search" action="/search">
+                        <div class="input-group">
+                            <input class="form-control" name="name" type="text" placeholder="Search for beer...">
+                            <span class="form-group input-group-btn">
+                                <input class="btn btn-default" type="submit" value="Go!">
+                            </span>
+                        </div>
+                    </form>
+                    <div id="page-selection-1"></div>
+                    <script>
+                        $("#page-selection-1").bootpag({
+                            total: <%= data.numberOfPages %>,
+                            page: <%= data.currentPage %>,
+                            maxVisible: 10
+                        }).on("page", function(event, num){
+                            window.location.search = jQuery.query.set("p", num);
+                        });
+                    </script>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="beer-panel panel panel-default" >
+                        <div class="panel-heading">
+                            <i class="fa fa-chevron-right"></i>
+                            Results
+                        </div>
+                        <div class="panel-body">
+                            <% if(data.data !== undefined) { %>
+                                <ul class="beer-box">
+                                    <% data.data.forEach(function(beer) { %>
+                                        <li class="left clearfix">
+                                            <span class="beer-img pull-left">
+                                                <img src=<%= beer.labels !== undefined ? beer.labels.medium : "/img/unavailable.svg"%> alt="Beer" class="img-circle" />
+                                            </span>
+                                            <span class="pull-right">
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#<%= beer.id %>"><i class="fa fa-heart"></i> Add to logbook</button>
+                                                <div class="modal fade" id="<%= beer.id %>" tabindex="-1" role="dialog" aria-labelledby="<%= beer.id%>Label" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title" id="<%= beer.id%>Label">Add <%= beer.name %> to your logbook?</h4>
+                                                            </div>
+                                                            <form role="form" method="post" action="/search">
+                                                                <div class="modal-body">
+                                                                    <input type="hidden" name="name" value=<%= encodeURI(beer.name) %>>
+                                                                    <input type="hidden" name="brewerydb_id" value=<%= beer.id %>>
+                                                                    <div class="form-group">
+                                                                        <label for="rating">Rating</label>
+                                                                        <select name="rating" class="form-control" id="rating">
+                                                                            <% for (var i = 0; i <= 10; i++) { %>
+                                                                                <option><%= i %></option>
+                                                                            <% }; %>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="comment">Comment</label>
+                                                                        <input name="comment" type="text" class="form-control" id="comment" placeholder="Enter a comment for this beer...">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                            <div>
+                                                <strong><%= beer.name %></strong>
+                                                <p>
+                                                    <b>Description: </b> <%= beer.description !== undefined ? beer.description : "Not Available."%>
+                                                </p>
+                                                <p>
+                                                    <b>ABV: </b> <%= beer.abv !== undefined ? beer.abv : "Not Available."%> |
+                                                    <b>Style: </b> <%= beer.style !== undefined ? beer.style.name : "Not Available."%> |
+                                                    <b>Vintage Year: </b> <%= beer.year !== undefined ? beer.year : "Not Available."%>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    <% }); %>
+                                </ul>
+                            <% } else { %>
+                                <p><strong>No beers found :(</strong></p>
+                                <p>You can try using <a href="http://en.wikipedia.org/wiki/Regular_expression">RegEx</a> to wildcard your search.<br>
+                                E.g. searching for <i>'brooklyn'</i> will not match <i>Brooklyn Lager</i> but searching for <i>'brooklyn*'</i> will.</p>
+                        <% }; %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="page-selection-2"></div>
+                    <script>
+                        $("#page-selection-2").bootpag({
+                            total: <%= data.numberOfPages %>,
+                            page: <%= data.currentPage %>,
+                            maxVisible: 10
+                        }).on("page", function(event, num){
+                            window.location.search = jQuery.query.set("p", num);
+                        });
+                    </script>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<% include partials/footer.ejs %>

@@ -1,0 +1,62 @@
+<% include partials/head.ejs %>
+
+<div id="wrapper">
+    <% include partials/top-nav.ejs %>
+    <% include partials/side-nav.ejs %>
+
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>My Beers</h2>
+                    <h5>Edit your beer ratings and comments here!</h5>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="beer-panel panel panel-default" >
+                        <div class="panel-heading">
+                            <i class="fa fa-chevron-right"></i>
+                            Results
+                        </div>
+                        <div class="panel-body">
+                            <ul class="beer-box">
+                                <% data.forEach(function(beer) { %>
+                                    <li class="left clearfix">
+                                        <span class="beer-img pull-left">
+                                            <img src=<%= beer.data.labels !== undefined ? beer.data.labels.medium : "/img/unavailable.svg"%> alt="Beer" class="img-circle" />
+                                        </span>
+                                        <span class="pull-right">
+                                            <button class="btn btn-primary"><i class="fa fa-edit"></i> Edit my feedback</button>
+                                        </span>
+                                        <div>
+                                            <strong><%= beer.data.name %></strong>
+                                            <p>
+                                                <b>Description: </b> <%= beer.data.description !== undefined ? beer.data.description : "Not Available."%>
+                                            </p>
+                                            <p>
+                                                <b>ABV: </b> <%= beer.data.abv !== undefined ? beer.data.abv : "Not Available."%> |
+                                                <b>Style: </b> <%= beer.data.style !== undefined ? beer.data.style.name : "Not Available."%> |
+                                                <b>Vintage Year: </b> <%= beer.data.year !== undefined ? beer.data.year : "Not Available."%>
+                                            </p>
+                                            <% if (userData[beer.data.name.toLowerCase()] !== undefined) { %>
+                                                <p>
+                                                    <b>My Rating: </b> <%= userData[beer.data.name.toLowerCase()].rating %>/10 |
+                                                    <b>My Comments: </b> <%= userData[beer.data.name.toLowerCase()].comment !== undefined ? userData[beer.data.name.toLowerCase()].comment : "Not available."%>
+                                                <p>
+                                            <% }; %>
+                                        </div>
+                                    </li>
+                                <% }); %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<% include partials/footer.ejs %>
