@@ -28,7 +28,6 @@ app.get('/search', function(req, res) {
             // TODO - add better error handling
             res.render('error.ejs');
         }
-
     ).done()
 });
 
@@ -60,7 +59,6 @@ app.post('/search', function(req, res) {
             // TODO - add better error handling
             res.render('error.ejs');
         }
-
     ).done()
 });
 
