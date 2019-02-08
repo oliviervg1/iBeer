@@ -1,8 +1,7 @@
-FROM oliviervg1/centos7
-MAINTAINER Olivier Van Goethem <olivier-vg@outlook.com>
-ADD ./src /opt/webapp/
-ADD package.json /opt/webapp/
-WORKDIR /opt/webapp
-RUN npm install
-EXPOSE 5001
-CMD ["npm", "start"]
+FROM node:11
+WORKDIR /opt/ibeer
+COPY package*.json ./
+RUN npm install --only=production
+COPY ./src ./
+EXPOSE 8000
+CMD ["nodejs", "server.js"]

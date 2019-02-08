@@ -1,8 +1,7 @@
-FROM oliviervg1/centos7
-MAINTAINER Olivier Van Goethem <olivier-vg@outlook.com>
-ADD requirements.txt /opt/webapp/
-ADD ./src /opt/webapp/
-WORKDIR /opt/webapp
+FROM python:3
+WORKDIR /opt/ibeer
+COPY requirements.txt ./
+COPY ./src ./
 RUN pip install -r requirements.txt
-EXPOSE 5000
+EXPOSE 8080
 CMD ["python", "app.py"]
