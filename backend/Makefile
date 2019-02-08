@@ -1,30 +1,19 @@
-.PHONY: clean clean_docker test build_container run
+env: env/bin/activate
 
-venv: venv/bin/activate
+env/bin/activate: requirements.txt
+	test -d env || virtualenv -p python3 env
+	. env/bin/activate && pip install -r requirements.txt && pip install nose mock flake8
 
-venv/bin/activate: requirements.txt
-	test -d venv || virtualenv --no-site-packages venv
-	. venv/bin/activate && pip install -r requirements.txt && pip install nose mock flake8
-	touch venv/bin/activate
-
+.PHONY: clean
 clean:
-	- rm -rf venv STATE_DIR
+	- rm -rf env STATE_DIR
 	- rm -rf STATE_DIR
 	- find . -name "*.pyc" | xargs rm
 
-clean_docker:
-	- sudo docker stop backend
-	- sudo docker rm backend
-	- sudo docker rmi oliviervg1/backend
+.PHONY: test
+test: env
+	. env/bin/activate && flake8 src test && nosetests -v test
 
-test: venv
-	. venv/bin/activate && flake8 src test && nosetests -v test
-
-build_container:
-	sudo docker build --rm -q -t="oliviervg1/backend" .
-
-run: clean clean_docker build_container
-	sudo docker run --name="backend" -d -p 5000:5000 oliviervg1/backend
-
-run_locally: venv
-	. venv/bin/activate && python src/app.py
+.PHONY: run
+run: env
+	. env/bin/activate && python src/app.py

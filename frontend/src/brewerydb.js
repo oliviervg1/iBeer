@@ -18,8 +18,6 @@ exports.get = function(endpoint, options) {
             'timeout': '10000'
         },
         function (error, response, body) {
-            console.log(response);
-            console.log(body);
             if (error || response.statusCode != 200) {
                 console.log('Error!');
                 d.reject(new Error(error));

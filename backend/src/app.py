@@ -107,16 +107,4 @@ if __name__ == "__main__":
         # Create DB tables
         tables.metadata.create_all(engine)
 
-        # Add fixture data
-        session = Session()
-        leffe = Beer(
-            "Leffe Blonde", 8, "UukHF7",
-            comment="Good beer!"
-        )
-        brooklyn = Beer(
-            "Brooklyn Lager", 6, "xpS5TS"
-        )
-        session.add_all([leffe, brooklyn])
-        session.commit()
-
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=8080)

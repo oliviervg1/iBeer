@@ -1,7 +1,7 @@
 var q = require('q'),
     request = require('request');
 
-var backend_url = 'http://backend:5000';
+var backend_url = 'http://localhost:8080';
 
 exports.get = function(endpoint) {
     var d = q.defer();

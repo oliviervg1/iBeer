@@ -22,7 +22,6 @@ app.get('/search', function(req, res) {
         },
         function(error) {
             // TODO - add better error handling
-            console.log(error);
             res.render('error.ejs');
         }
     ).done()
@@ -59,7 +58,7 @@ app.post('/search', function(req, res) {
     ).done()
 });
 
-app.get('/my-beers', function(req, res) {
+app.get('/me', function(req, res) {
     var userData = {},
         promises = [];
 
@@ -79,7 +78,7 @@ app.get('/my-beers', function(req, res) {
         function (results) {
             var breweryDBData = Array.prototype.slice.call(arguments);
             res.render(
-                'my-beers.ejs', {data: breweryDBData, userData: userData}
+                'me.ejs', {data: breweryDBData, userData: userData}
             );
         }
     ).fail(

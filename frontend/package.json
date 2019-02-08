@@ -10,10 +10,6 @@
         "q": "~1.5.1",
         "request": "^2.88.0"
     },
-    "scripts": {
-        "start": "nodejs src/server.js",
-        "debug": "nodejs debug src/server.js"
-    },
     "main": "server.js",
     "repository": "",
     "author": "",
