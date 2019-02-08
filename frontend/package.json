@@ -4,15 +4,15 @@
     "version": "0.0.1",
     "description": "A Simple NodeJS Application",
     "dependencies": {
-        "ejs": "~1.0.0",
-        "express": "~4.10.4",
-        "body-parser": "~1.9.3",
-        "request": "~2.40.0",
-        "q": "~1.0.1"
+        "body-parser": "~1.18.3",
+        "ejs": "~2.6.1",
+        "express": "^4.16.4",
+        "q": "~1.5.1",
+        "request": "^2.88.0"
     },
     "scripts": {
-        "start": "node server.js",
-        "debug": "node debug server.js"
+        "start": "nodejs src/server.js",
+        "debug": "nodejs debug src/server.js"
     },
     "main": "server.js",
     "repository": "",

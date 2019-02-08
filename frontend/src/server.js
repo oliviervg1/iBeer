@@ -2,8 +2,8 @@ var express = require('express'),
     ejs = require('ejs'),
     q = require('q'),
     bodyParser = require('body-parser'),
-    beerLogbook = require('./client/beer-logbook'),
-    breweryDB = require('./client/brewery-db');
+    logbook = require('./logbook'),
+    breweryDB = require('./brewerydb');
 
 var app = express();
 app.set('view engine', 'ejs');
@@ -16,16 +16,13 @@ app.get('/', function(req, res) {
 });
 
 app.get('/search', function(req, res) {
-    // the name query string is _always_ needed for BreweryDB
-    if (req.query.name === undefined || req.query.name === '') {
-        req.query.name = '*';
-    };
     breweryDB.get('/beers', req.query).then(
         function(data) {
             res.render('search.ejs', {data: data});
         },
         function(error) {
             // TODO - add better error handling
+            console.log(error);
             res.render('error.ejs');
         }
     ).done()
@@ -37,7 +34,7 @@ app.post('/search', function(req, res) {
         'rating': req.body.rating,
         'brewerydb_id': req.body.brewerydb_id || ''
     };
-    beerLogbook.put('/beer/' + req.body.name, options).then(
+    logbook.put('/beer/' + req.body.name, options).then(
         function(data) {
             res.redirect('/search');
         },
@@ -66,7 +63,7 @@ app.get('/my-beers', function(req, res) {
     var userData = {},
         promises = [];
 
-    beerLogbook.get('/beers').then(
+    logbook.get('/beers').then(
         function(data) {
             // Keep track of my rating and comments
             userData = data;
@@ -93,5 +90,5 @@ app.get('/my-beers', function(req, res) {
     ).done()
 });
 
-app.listen(5001);
-console.log('Listening on ' + 5001);
+app.listen(8000);
+console.log('Listening on ' + 8000);
