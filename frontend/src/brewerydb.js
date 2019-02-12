@@ -19,7 +19,7 @@ exports.get = function(endpoint, options) {
         },
         function (error, response, body) {
             if (error || response.statusCode != 200) {
-                console.log('Error!');
+                console.log(error);
                 d.reject(new Error(error));
             } else {
                 d.resolve(body);
