@@ -32,20 +32,20 @@ spec:
           name: ibeer-db
           env:
             - name: MYSQL_RANDOM_ROOT_PASSWORD
-              value: yes
+              value: "yes"
             - name: MYSQL_DATABASE
-              value: ibeer
+              value: "ibeer"
             - name: MYSQL_USER
-              value: ibeer
+              value: "ibeer"
             - name: MYSQL_PASSWORD
-              value: super-secret-password
-
+              value: "super-secret-password"
           ports:
             - containerPort: 3306
               name: ibeer-db
           volumeMounts:
             - name: ibeer-db-persistent-storage
               mountPath: /var/lib/mysql
+              subPath: mysql
       volumes:
         - name: ibeer-db-persistent-storage
           persistentVolumeClaim:
