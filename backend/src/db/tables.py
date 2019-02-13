@@ -14,10 +14,10 @@ MYSQL_DEFAULTS = {
 beers = Table(
     "beers", metadata,
     Column("id", Integer, primary_key=True),
-    Column("name", Text, nullable=False),
+    Column("name", Text(255), nullable=False),
     Column("rating", Integer, nullable=False),
-    Column("comment", Text, nullable=True),
-    Column("brewerydb_id", Text, nullable=False),
+    Column("comment", Text(255), nullable=True),
+    Column("brewerydb_id", Text(255), nullable=False),
     UniqueConstraint("name"),
     **MYSQL_DEFAULTS
 )
