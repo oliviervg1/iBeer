@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: "ibeer-frontend-sha256"
-        image: "gcr.io/ovg-training/github.com/oliviervg1/ibeer-frontend@sha256:da8e768e4223a45093813c9709f720a4d33701f4e31a8be460fddea11013efdc"
+        image: "gcr.io/ovg-training/github.com/oliviervg1/ibeer-frontend@sha256:f6abdb18cac2303d2c19e66b7e42e0f3ca4ffac450b9d4e2a365a6c6a40bc85d"
 
 ---
 apiVersion: "autoscaling/v2beta1"
