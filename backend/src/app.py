@@ -96,15 +96,11 @@ def remove_beer(beer_name):
 
 if __name__ == "__main__":
 
-    if not os.path.exists("STATE_DIR"):
-        os.mkdir("STATE_DIR")
-
     engine = bind_session_engine(
-        "sqlite:///STATE_DIR/repos.db", encoding="utf-8"
+        "mysql+pymysql://ibeer:super-secret-password@ibeer-db/ibeer", encoding="utf-8"
     )
 
-    if not os.path.exists("STATE_DIR/repos.db"):
-        # Create DB tables
-        tables.metadata.create_all(engine)
+    # Create DB tables
+    tables.metadata.create_all(engine)
 
     app.run(host="0.0.0.0", port=8080)

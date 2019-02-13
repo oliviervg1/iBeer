@@ -1,0 +1,66 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: ibeer-db-volumeclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ibeer-db
+  labels:
+    app: ibeer-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ibeer-db
+  template:
+    metadata:
+      labels:
+        app: ibeer-db
+    spec:
+      containers:
+        - image: mysql:8
+          name: ibeer-db
+          env:
+            - name: MYSQL_RANDOM_ROOT_PASSWORD
+              value: yes
+            - name: MYSQL_DATABASE
+              value: ibeer
+            - name: MYSQL_USER
+              value: ibeer
+            - name: MYSQL_PASSWORD
+              value: super-secret-password
+
+          ports:
+            - containerPort: 3306
+              name: ibeer-db
+          volumeMounts:
+            - name: ibeer-db-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: ibeer-db-persistent-storage
+          persistentVolumeClaim:
+            claimName: ibeer-db-volumeclaim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ibeer-db
+  labels:
+    app: ibeer-db
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+  selector:
+    app: ibeer-db
