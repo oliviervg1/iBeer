@@ -1,0 +1,58 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  name: "ibeer-backend"
+  namespace: "default"
+  labels:
+    app: "ibeer-backend"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "ibeer-backend"
+  template:
+    metadata:
+      labels:
+        app: "ibeer-backend"
+    spec:
+      containers:
+      - name: "ibeer-backend-sha256"
+        image: "gcr.io/ovg-training/github.com/oliviervg1/ibeer-backend@sha256:03b6fb4bdb6503d9237168d42c899a3bcf242d21d2ee29591abc6dbda51a6c2f"
+
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "ibeer-backend-hpa"
+  namespace: "default"
+  labels:
+    app: "ibeer-backend"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "ibeer-backend"
+    apiVersion: "apps/v1beta1"
+  minReplicas: 1
+  maxReplicas: 1
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
+
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "ibeer-backend-service"
+  namespace: "default"
+  labels:
+    app: "ibeer-backend"
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: "ibeer-backend"
+  type: "ClusterIP"
