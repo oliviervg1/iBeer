@@ -7,9 +7,6 @@ gcloud beta container clusters get-credentials ovg-training-kube --region europe
 # Auto inject istio sidecars
 kubectl label namespace default istio-injection=enabled
 
-# Allow istio services to trust each other
-kubectl apply -f mtls-destination-rule.yaml
-
 # Deploy backend
 kubectl apply -f ./backend/db.yaml
 kubectl apply -f ./backend/deployment.yaml
