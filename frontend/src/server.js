@@ -42,20 +42,6 @@ app.post('/search', function(req, res) {
             res.redirect('/search');
         }
     ).done()
-
-    // the name query string is _always_ needed for BreweryDB
-    if (req.query.name === undefined || req.query.name === '') {
-        req.query.name = '*';
-    };
-    breweryDB.get('/beers', req.query).then(
-        function(data) {
-            res.render('search.ejs', {data: data});
-        },
-        function(error) {
-            // TODO - add better error handling
-            res.render('error.ejs');
-        }
-    ).done()
 });
 
 app.get('/me', function(req, res) {
