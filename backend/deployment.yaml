@@ -7,7 +7,7 @@ metadata:
   labels:
     app: "ibeer-backend"
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: "ibeer-backend"
@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: "ibeer-backend-sha256"
-        image: "gcr.io/ovg-training/github.com/oliviervg1/ibeer-backend@sha256:03b6fb4bdb6503d9237168d42c899a3bcf242d21d2ee29591abc6dbda51a6c2f"
+        image: "gcr.io/ovg-training/github.com/oliviervg1/ibeer-backend@sha256:c115e78f8c0233e3f412c051173437955f0163b2b0134f6896fd020062d4b4f3"
 
 ---
 apiVersion: "autoscaling/v2beta1"
@@ -34,7 +34,7 @@ spec:
     name: "ibeer-backend"
     apiVersion: "apps/v1beta1"
   minReplicas: 1
-  maxReplicas: 1
+  maxReplicas: 5
   metrics:
   - type: "Resource"
     resource:
