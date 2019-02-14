@@ -97,7 +97,7 @@ def remove_beer(beer_name):
 if __name__ == "__main__":
 
     engine = bind_session_engine(
-        "mysql+pymysql://ibeer:super-secret-password@ibeer-db/ibeer", encoding="utf-8"
+        "mysql+pymysql://ibeer:super-secret-password@ibeer-db-service/ibeer", encoding="utf-8"
     )
 
     # Create DB tables

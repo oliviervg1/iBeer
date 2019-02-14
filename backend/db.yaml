@@ -55,7 +55,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ibeer-db
+  name: ibeer-db-service
   labels:
     app: ibeer-db
 spec:
@@ -64,3 +64,14 @@ spec:
     - port: 3306
   selector:
     app: ibeer-db
+
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: "DestinationRule"
+metadata:
+  name: "ibeer-db-client-mtls"
+spec:
+  host: ibeer-db
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
