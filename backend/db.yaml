@@ -71,7 +71,7 @@ kind: "DestinationRule"
 metadata:
   name: "ibeer-db-client-mtls"
 spec:
-  host: ibeer-db
+  host: ibeer-db-service
   trafficPolicy:
     tls:
       mode: ISTIO_MUTUAL
